@@ -1,0 +1,23 @@
+.loading {
+  text-align: center;
+}
+
+.loading .spinner {
+  animation: spin infinite 1s linear;
+}
+
+h2 {
+  font-size: 1.6em;
+  color: #999;
+  margin-bottom: 25px;
+  margin-top: 0;
+}
+
+.edit-button {
+  float: right;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
