@@ -8,17 +8,84 @@ class App extends Component {
     super(props);
     this.state = {
       movie: props.movie,
-      showForm: props.showForm
+      showForm: props.showForm,
+      formData: {
+        title: "",
+        date: "",
+        duration: 0,
+        genre: "",
+        synopsis: ""
+      }
     };
     this.openForm = this.openForm.bind(this);
     this.closeForm = this.closeForm.bind(this);
+    this.saveForm = this.saveForm.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleDurationChange = this.handleDurationChange.bind(this);
+    this.handleGenreChange = this.handleGenreChange.bind(this);
+    this.handleSynopsisChange = this.handleSynopsisChange.bind(this);
   }
 
   openForm() {
     this.setState({ showForm: true });
   }
+
   closeForm() {
     this.setState({ showForm: false });
+  }
+
+  saveForm() {
+    // TODO data needs to be sent to the server
+    this.setState({
+      movie: { ...this.state.formData }
+    });
+    this.closeForm();
+  }
+
+  handleTitleChange(e) {
+    this.setState({
+      formData: {
+        ...this.state.formData,
+        title: e.target.value
+      }
+    });
+  }
+
+  handleDateChange(e) {
+    this.setState({
+      formData: {
+        ...this.state.formData,
+        date: e.target.value
+      }
+    });
+  }
+
+  handleDurationChange(e) {
+    this.setState({
+      formData: {
+        ...this.state.formData,
+        duration: e.target.value
+      }
+    });
+  }
+
+  handleGenreChange(e) {
+    this.setState({
+      formData: {
+        ...this.state.formData,
+        genre: e.target.value
+      }
+    });
+  }
+
+  handleSynopsisChange(e) {
+    this.setState({
+      formData: {
+        ...this.state.formData,
+        synopsis: e.target.value
+      }
+    });
   }
   
   componentDidMount() {
@@ -66,6 +133,8 @@ class App extends Component {
                 <FormControl
                   type="text"
                   placeholder="e.g. 'People Places Things'"
+                  value={this.state.formData.title}
+                  onChange={this.handleTitleChange}
                 />
                 <FormControl.Feedback/>
               </FormGroup>
@@ -73,6 +142,8 @@ class App extends Component {
                 <ControlLabel>Release date</ControlLabel>
                 <FormControl
                   type="date"
+                  value={this.state.formData.date}
+                  onChange={this.handleDateChange}
                 />
                 <FormControl.Feedback/>
               </FormGroup>
@@ -82,6 +153,8 @@ class App extends Component {
                   type="number"
                   placeholder="e.g. 90 minutes"
                   min="0"
+                  value={this.state.formData.duration}
+                  onChange={this.handleDurationChange}
                 />
                 <FormControl.Feedback/>
               </FormGroup>
@@ -90,6 +163,8 @@ class App extends Component {
                 <FormControl
                   type="text"
                   placeholder="e.g. Comedy, Science-Fiction, etc."
+                  value={this.state.formData.genre}
+                  onChange={this.handleGenreChange}
                 />
                 <FormControl.Feedback/>
               </FormGroup>
@@ -98,11 +173,17 @@ class App extends Component {
                 <FormControl
                   componentClass="textarea"
                   placeholder=" e.g. description of the movie"
+                  value={this.state.formData.synopsis}
+                  onChange={this.handleSynopsisChange}
                 />
                 <FormControl.Feedback/>
               </FormGroup>
             </form>
           </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.closeForm}>Cancel</Button>
+            <Button onClick={this.saveForm}>Save</Button>
+          </Modal.Footer>
         </Modal>
       </div>
 
