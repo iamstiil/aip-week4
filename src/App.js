@@ -7,8 +7,18 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      movie: props.movie
+      movie: props.movie,
+      showForm: props.showForm
     };
+    this.openForm = this.openForm.bind(this);
+    this.closeForm = this.closeForm.bind(this);
+  }
+
+  openForm() {
+    this.setState({ showForm: true });
+  }
+  closeForm() {
+    this.setState({ showForm: false });
   }
   
   componentDidMount() {
@@ -40,12 +50,15 @@ class App extends Component {
     return (
       <div className="container">
         <Jumbotron>
-          <Button className="edit-button" bsStyle="default"><Glyphicon glyph="pencil" /></Button>
+          <Button className="edit-button" bsStyle="default" onClick={this.openForm}><Glyphicon glyph="pencil" /></Button>
           <h1>{this.state.movie.title}</h1>
           <h2>Released {this.state.movie.date} - {this.state.movie.genre} - {this.state.movie.duration} minutes</h2>
           <p>{this.state.movie.synopsis}</p>
         </Jumbotron>
-        <Modal show={true}>
+        <Modal show={this.state.showForm} onHide={this.closeForm}>
+          <Modal.Header closeButton>
+            Edit your Recommendation
+          </Modal.Header>
           <Modal.Body>
             <form>
               <FormGroup controlId="title">
@@ -98,7 +111,8 @@ class App extends Component {
 }
 
 App.defaultProps = {
-  movie: false
+  movie: false,
+  showForm: false
 }
 
 export default App;
