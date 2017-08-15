@@ -15,6 +15,13 @@ class App extends Component {
         duration: 0,
         genre: "",
         synopsis: ""
+      },
+      validationStates: {
+        title: null,
+        date: null,
+        duration: null,
+        genre: null,
+        synopsis: null
       }
     };
     this.openForm = this.openForm.bind(this);
@@ -45,46 +52,136 @@ class App extends Component {
   }
 
   handleTitleChange(e) {
+    let val = e.target.value;
+    
+    if(val === ''){
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          title: 'error'
+        }
+      });
+    } else {
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          title: 'success'
+        }
+      });
+    }
+    
     this.setState({
       formData: {
         ...this.state.formData,
-        title: e.target.value
+        title: val
       }
     });
   }
 
   handleDateChange(e) {
+    let val = e.target.value;
+    
+    if(val === '' || !/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(val)){
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          date: 'error'
+        }
+      });
+    } else {
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          date: 'success'
+        }
+      });
+    }
+    
     this.setState({
       formData: {
         ...this.state.formData,
-        date: e.target.value
+        date: val
       }
     });
   }
 
   handleDurationChange(e) {
+    let val = e.target.value;
+    
+    if(val === ''){
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          duration: 'error'
+        }
+      });
+    } else {
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          duration: 'success'
+        }
+      });
+    }
+    
     this.setState({
       formData: {
         ...this.state.formData,
-        duration: e.target.value
+        duration: val
       }
     });
   }
 
   handleGenreChange(e) {
+    let val = e.target.value;
+    
+    if(val === ''){
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          genre: 'error'
+        }
+      });
+    } else {
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          genre: 'success'
+        }
+      });
+    }
+    
     this.setState({
       formData: {
         ...this.state.formData,
-        genre: e.target.value
+        genre: val
       }
     });
   }
 
   handleSynopsisChange(e) {
+    let val = e.target.value;
+    
+    if(val === ''){
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          synopsis: 'error'
+        }
+      });
+    } else {
+      this.setState({
+        validationStates: {
+          ...this.state.validationStates,
+          synopsis: 'success'
+        }
+      });
+    }
+    
     this.setState({
       formData: {
         ...this.state.formData,
-        synopsis: e.target.value
+        synopsis: val
       }
     });
   }
@@ -123,7 +220,7 @@ class App extends Component {
           </Modal.Header>
           <Modal.Body>
             <form>
-              <FormGroup controlId="title">
+              <FormGroup controlId="title" validationState={this.state.validationStates.title}>
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
                   type="text"
@@ -133,7 +230,7 @@ class App extends Component {
                 />
                 <FormControl.Feedback/>
               </FormGroup>
-              <FormGroup controlId="date">
+              <FormGroup controlId="date" validationState={this.state.validationStates.date}>
                 <ControlLabel>Release date</ControlLabel>
                 <FormControl
                   type="date"
@@ -142,7 +239,7 @@ class App extends Component {
                 />
                 <FormControl.Feedback/>
               </FormGroup>
-              <FormGroup controlId="duration">
+              <FormGroup controlId="duration" validationState={this.state.validationStates.duration}>
                 <ControlLabel>Duration</ControlLabel>
                 <FormControl
                   type="number"
@@ -153,7 +250,7 @@ class App extends Component {
                 />
                 <FormControl.Feedback/>
               </FormGroup>
-              <FormGroup controlId="genre">
+              <FormGroup controlId="genre" validationState={this.state.validationStates.genre}>
                 <ControlLabel>Genre</ControlLabel>
                 <FormControl
                   type="text"
@@ -163,7 +260,7 @@ class App extends Component {
                 />
                 <FormControl.Feedback/>
               </FormGroup>
-              <FormGroup controlId="synopsis">
+              <FormGroup controlId="synopsis" validationState={this.state.validationStates.synopsis}>
                 <ControlLabel>Synopsis</ControlLabel>
                 <FormControl
                   componentClass="textarea"
