@@ -36,7 +36,8 @@ class App extends Component {
   }
 
   saveForm() {
-    // TODO data needs to be sent to the server
+    console.log({ ...this.state.formData });
+    axios.post(`http://localhost:8080/`, this.state.formData);
     this.setState({
       movie: { ...this.state.formData }
     });
@@ -89,18 +90,12 @@ class App extends Component {
   }
   
   componentDidMount() {
-    axios.get(`/`)
+    axios.get(`http://localhost:8080/`)
       .then(res => {
         console.log("fetch", res);
         this.setState((prevState, props) => {
           return {
-            movie: {
-              title: 'People Places Things',
-              date: 'August 2015',
-              duration: 85,
-              genre: 'Comedy',
-              synopsis: 'Will Henry is a newly single graphic novelist balancing parenting hisyoung twin daughters and a classroom full of students while exploringand navigating the rich complexities of new love and letting go of thewoman who left him.'
-            }
+            movie: res.data
           };
         });
       });
